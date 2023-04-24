@@ -1,0 +1,17 @@
+protocol = "mks-labjack"
+doc = ""
+traits = ["is-daemon"]
+
+[links]
+source = "https://github.com/yaq-project/yaqd-bertram"
+bugtracker = "https://github.com/yaq-project/yaqd-bertram/-/issues"
+
+[installation]
+PyPI = "https://pypi.org/project/yaqd-bertram"
+
+[config]
+
+[state]
+
+[messages]
+
