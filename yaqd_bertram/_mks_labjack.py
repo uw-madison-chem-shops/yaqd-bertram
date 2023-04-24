@@ -27,11 +27,11 @@ class MKSLabjack(HasTransformedPosition, HasLimits, HasPosition, IsDaemon):
 
     def get_close(self) -> int:
         response = self._client.read_register(self._config["modbus_address_close"])
-        return data_to_int16(response.registers)
+        return data_to_uint16(response.registers)
 
     def get_open(self) -> int:
         response = self._client.read_register(self._config["modbus_address_open"])
-        return data_to_int16(response.registers)
+        return data_to_uint16(response.registers)
 
     def get_position(self):
         return self.to_transformed(self._state["position"])
@@ -43,11 +43,11 @@ class MKSLabjack(HasTransformedPosition, HasLimits, HasPosition, IsDaemon):
         return out
 
     def set_close(self, value: int) -> None:
-        data = int16_to_data(value)
+        data = uint16_to_data(value)
         self._client.write_register(self._config["modbus_address_close"], data)
 
     def set_open(self, value: int) -> None:
-        data = int16_to_data(value)
+        data = uint16_to_data(value)
         self._client.write_register(self._config["modbus_address_open"], data)
 
     def _set_position(self, position):
