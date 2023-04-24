@@ -8,6 +8,8 @@ from pymodbus.client import ModbusTcpClient  # type: ignore
 
 from yaqd_core import HasLimits, HasPosition, HasTransformedPosition, IsDaemon
 
+from ._bytes import *
+
 
 class MKSLabjack(HasTransformedPosition, HasLimits, HasPosition, IsDaemon):
     _kind = "mks-labjack"
