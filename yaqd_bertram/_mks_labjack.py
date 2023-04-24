@@ -3,24 +3,64 @@ __all__ = ["MksLabjack"]
 import asyncio
 from typing import Dict, Any, List
 
-from yaqd_core import IsDaemon
+import numpy as np
+from pymodbus.client import ModbusTcpClient  # type: ignore
+
+from yaqd_core import HasLimits, HasPosition, HasTransformedPosition, IsDaemon
+
+from ._bytes import *
 
 
-class MksLabjack(IsDaemon):
+class MKSLabjack(HasTransformedPosition, HasLimits, HasPosition, IsDaemon):
     _kind = "mks-labjack"
+
+    clients: Dict[str, ModbusTcpClient] = {}
 
     def __init__(self, name, config, config_filepath):
         super().__init__(name, config, config_filepath)
-        # Perform any unique initialization
+        # grab client
+        if self._config["address"] in MKSLabjack.clients:
+            self._client = MKSLabjack.clients[self._config["address"]]
+        else:
+            self._client = ModbusTcpClient(config["address"])
+            MKSLabjack.clients[self._config["address"]] = self._client
+
+    def get_close(self) -> int:
+        response = self._client.read_register(self._config["modbus_address_close"])
+        return data_to_uint16(response.registers)
+
+    def get_open(self) -> int:
+        response = self._client.read_register(self._config["modbus_address_open"])
+        return data_to_uint16(response.registers)
+
+    def get_position(self):
+        return self.to_transformed(self._state["position"])
+
+    def _relative_to_transformed(self, relative_position):
+        xp = [p["setpoint"] for p in self._config["calibration"]]
+        fp = [p["measured"] for p in self._config["calibration"]]
+        out = np.interp(relative_position, xp, fp)
+        return out
+
+    def set_close(self, value: int) -> None:
+        data = uint16_to_data(value)
+        self._client.write_register(self._config["modbus_address_close"], data)
+
+    def set_open(self, value: int) -> None:
+        data = uint16_to_data(value)
+        self._client.write_register(self._config["modbus_address_open"], data)
+
+    def _set_position(self, position):
+        data = float32_to_data(position)
+        self._client.write_registers(self._config["modbus_address_setpoint"], data)
+
+    def _transformed_to_relative(self, transformed_position):
+        xp = [p["measured"] for p in self._config["calibration"]]
+        fp = [p["setpoint"] for p in self._config["calibration"]]
+        return np.interp(transformed_position, xp, fp)
 
     async def update_state(self):
-        """Continually monitor and update the current daemon state."""
-        # If there is no state to monitor continuously, delete this function
         while True:
-            # Perform any updates to internal state
-            self._busy = False
-            # There must be at least one `await` in this loop
-            # This one waits for something to trigger the "busy" state
-            # (Setting `self._busy = True)
-            # Otherwise, you can simply `await asyncio.sleep(0.01)`
-            await self._busy_sig.wait()
+            response = self._client.read_registers(self._config["modbus_address_readback"], 2)
+            position = data_to_float32(response.registers)
+            self._state["position"] = position

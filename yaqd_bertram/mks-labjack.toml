@@ -9,9 +9,35 @@ bugtracker = "https://github.com/yaq-project/yaqd-bertram/-/issues"
 [installation]
 PyPI = "https://pypi.org/project/yaqd-bertram"
 
+[[types]]
+type = "record"
+name = "calibration_point"
+fields = [{"name"="setpoint", "type"="double"},
+          {"name"="measured", "type"="double"}]
+
 [config]
+
+[modbus_address_setpoint]
+type = "int"
+doc = "Modbus address to write volts to."
+
+[modbus_address_readback]
+type = "int"
+doc = "Modbus address to read voltage back from."
+
+[modbus_address_open]
+type = "int"
+doc = "Modbus address for digital control 'open'."
+
+[modbus_address_close]
+type = "int"
+doc = "Modbus address for digital control 'close'."
+
+[config.calibration]
+type = {"type"="array", "items"="calibration_point"}
+doc = "Array of calibration points for MFC, in units."
+default = [{"setpoint"=0.0, "measured"=0.0}, {"setpoint"=1000000.0, "measured"=1000000.0}]
 
 [state]
 
 [messages]
-
