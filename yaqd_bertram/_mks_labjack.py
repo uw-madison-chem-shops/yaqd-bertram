@@ -15,6 +15,7 @@ class MKSLabjack(HasTransformedPosition, HasLimits, HasPosition, IsDaemon):
     _kind = "mks-labjack"
 
     clients: Dict[str, ModbusTcpClient] = {}
+
     def __init__(self, name, config, config_filepath):
         super().__init__(name, config, config_filepath)
         # grab client
