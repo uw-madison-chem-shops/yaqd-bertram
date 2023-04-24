@@ -31,7 +31,7 @@ Issues = "https://github.com/yaq-project/yaqd-bertram/issues"
 dev = ["black", "pre-commit"]
 
 [tool.flit.scripts]
-yaqd-mks-labjack = "yaqd_bertram._mks_labjack:MksLabjack.main"
+yaqd-mks-labjack = "yaqd_bertram._mks_labjack:MKSLabjack.main"
 
 
 [tool.black]
