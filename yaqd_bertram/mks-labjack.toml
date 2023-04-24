@@ -41,3 +41,30 @@ default = [{"setpoint"=0.0, "measured"=0.0}, {"setpoint"=1000000.0, "measured"=1
 [state]
 
 [messages]
+
+[messages.get_close]
+response = "int"
+
+[messages.get_open]
+response = "int"
+
+[messages.set_close]
+request = [{"name"="value", "type"="int"}]
+
+[messages.set_open]
+request = [{"name"="value", "type"="int"}]
+
+[properties]
+
+[properties.close]
+getter = "get_close"
+setter = "set_close"
+type = "int"
+control_kind = "normal"
+record_kind = "metadata"
+
+[properties.open]
+getter = "get_open"
+setter = "set_o"
+type = "int"
+control_kind = "normal"
