@@ -26,11 +26,11 @@ class MKSLabjack(HasTransformedPosition, HasLimits, HasPosition, IsDaemon):
             MKSLabjack.clients[self._config["address"]] = self._client
 
     def get_close(self) -> int:
-        response = self._client.read_register(self._config["modbus_address_close"])
+        response = self._client.read_holding_registers(self._config["modbus_address_close"], 1)
         return data_to_uint16(response.registers)
 
     def get_open(self) -> int:
-        response = self._client.read_register(self._config["modbus_address_open"])
+        response = self._client.read_holding_registers(self._config["modbus_address_open"], 1)
         return data_to_uint16(response.registers)
 
     def get_position(self):
@@ -54,13 +54,19 @@ class MKSLabjack(HasTransformedPosition, HasLimits, HasPosition, IsDaemon):
         data = float32_to_data(position)
         self._client.write_registers(self._config["modbus_address_setpoint"], data)
 
+    def in_limits(self, value):
+        return True
+
     def _transformed_to_relative(self, transformed_position):
         xp = [p["measured"] for p in self._config["calibration"]]
         fp = [p["setpoint"] for p in self._config["calibration"]]
-        return np.interp(transformed_position, xp, fp)
+        out = np.interp(transformed_position, xp, fp)
+        return out
 
     async def update_state(self):
         while True:
-            response = self._client.read_registers(self._config["modbus_address_readback"], 2)
+            response = self._client.read_holding_registers(self._config["modbus_address_readback"], 2)
             position = data_to_float32(response.registers)
             self._state["position"] = position
+            await asyncio.sleep(1)
+

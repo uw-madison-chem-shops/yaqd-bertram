@@ -1,6 +1,6 @@
 protocol = "mks-labjack"
 doc = ""
-traits = ["is-daemon"]
+traits = ["has-transformed-position", "has-position", "has-limits", "is-daemon"]
 
 [links]
 source = "https://github.com/yaq-project/yaqd-bertram"
@@ -68,3 +68,4 @@ getter = "get_open"
 setter = "set_o"
 type = "int"
 control_kind = "normal"
+record_kind = "metadata"
