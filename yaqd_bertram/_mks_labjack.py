@@ -65,8 +65,9 @@ class MKSLabjack(HasTransformedPosition, HasLimits, HasPosition, IsDaemon):
 
     async def update_state(self):
         while True:
-            response = self._client.read_holding_registers(self._config["modbus_address_readback"], 2)
+            response = self._client.read_holding_registers(
+                self._config["modbus_address_readback"], 2
+            )
             position = data_to_float32(response.registers)
             self._state["position"] = position
             await asyncio.sleep(1)
-
