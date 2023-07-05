@@ -107,6 +107,7 @@
     },
     "links": {
         "bugtracker": "https://github.com/yaq-project/yaqd-bertram/-/issues",
+        "example-configs": "https://github.com/uw-madison-chem-shops/yaqd-bertram/tree/main/example-yaq-configs/mks-labjack",
         "source": "https://github.com/yaq-project/yaqd-bertram"
     },
     "messages": {

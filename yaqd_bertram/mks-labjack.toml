@@ -5,6 +5,7 @@ traits = ["has-transformed-position", "has-position", "has-limits", "is-daemon"]
 [links]
 source = "https://github.com/yaq-project/yaqd-bertram"
 bugtracker = "https://github.com/yaq-project/yaqd-bertram/-/issues"
+example-configs = "https://github.com/uw-madison-chem-shops/yaqd-bertram/tree/main/example-yaq-configs/mks-labjack"
 
 [installation]
 PyPI = "https://pypi.org/project/yaqd-bertram"

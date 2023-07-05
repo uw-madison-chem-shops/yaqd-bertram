@@ -1,0 +1,64 @@
+[mfc1]
+port = 38001
+address = "192.168.1.3"
+modbus_address_setpoint = 30004
+modbus_address_close = 2008
+modbus_address_open = 2010
+modbus_address_readback = 8
+enable = true
+calibration = [{"setpoint"=0, "measured"=0},
+		{"setpoint"=0.19, "measured"=0.760},
+		{"setpoint"=1.5, "measured"=6.890},
+		{"setpoint"=2.186, "measured"=10},
+		{"setpoint"=2.96, "measured"=13.540},
+		{"setpoint"=3.5, "measured"=16.05},
+		{"setpoint"=4, "measured"=17.60}]
+
+[mfc2]
+port = 38002
+address = "192.168.1.3"
+modbus_address_setpoint = 1002
+modbus_address_close = 2012
+modbus_address_open = 2014
+modbus_address_readback = 12
+enable = true
+calibration = [{"setpoint"=0, "measured"=0},
+		{"setpoint"=1.6982, "measured"=3.048},
+		{"setpoint"=2.1213, "measured"=4.067},
+		{"setpoint"=2.9989, "measured"=6.089},
+		{"setpoint"=4.2761, "measured"=9.041},
+		{"setpoint"=4.7117, "measured"=10.041},
+		{"setpoint"=5, "measured"=10.711}]
+
+[mfc3]
+port = 38003
+address = "192.168.1.3"
+modbus_address_setpoint = 30006
+modbus_address_close = 2009
+modbus_address_open = 2011
+modbus_address_readback = 16
+enable = true
+calibration = [{"setpoint"=-2, "measured"=-0.005},
+                {"setpoint"=0, "measured"=0},
+		{"setpoint"=2, "measured"=0.005},
+		{"setpoint"=3, "measured"=0.012},
+		{"setpoint"=4, "measured"=0.020},
+		{"setpoint"=5, "measured"=0.027}]
+
+[mfc4]
+port = 38004
+address = "192.168.1.3"
+modbus_address_setpoint = 1000
+modbus_address_close = 2015
+modbus_address_open = 2013
+modbus_address_readback = 20
+enable = true
+calibration = [{"setpoint"=0, "measured"=0},
+		{"setpoint"=1.6982, "measured"=3.048},
+		{"setpoint"=2.1213, "measured"=4.067},
+		{"setpoint"=2.9989, "measured"=6.089},
+		{"setpoint"=4.2761, "measured"=9.041},
+		{"setpoint"=4.7117, "measured"=10.041},
+		{"setpoint"=5, "measured"=10.711}]
+
+
